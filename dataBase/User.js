@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const { userRoleEnum } = require('../configs');
 
 const userSchema = new Schema({
-    userName: {
+    username: {
         type: String,
         required: true,
         unique: true,
@@ -40,4 +40,5 @@ const userSchema = new Schema({
 }, { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } });
 
 module.exports = model('user', userSchema);
+
 
