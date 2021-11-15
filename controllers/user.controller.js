@@ -1,5 +1,6 @@
 const passwordService = require('../services/password.service');
 const User = require('../dataBase/User');
+const { SuccessCreated } = require('../configs/error-enum');
 
 module.exports = {
     createUser: async (req, res, next) => {
@@ -21,6 +22,41 @@ module.exports = {
             const users = await User.find();
 
             res.json(users);
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    getUserById: (req, res, next) => {
+        try {
+            const user = req.user;
+
+            res.json(user);
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    updateUserById: async (req, res, next) => {
+        try {
+            const user = req.user;
+            const { first_name, last_name } = req.body;
+
+            const userUpdate = await User.findOneAndUpdate(user, { first_name, last_name }, {new: true});
+
+            res.status(SuccessCreated).json(userUpdate);
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    deleteUserById: async (req, res, next) => {
+        try {
+            const user = req.user;
+
+            await User.deleteOne(user);
+
+            res.json('User was delete successfully');
         } catch (e) {
             next(e);
         }

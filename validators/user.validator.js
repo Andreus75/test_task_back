@@ -32,4 +32,24 @@ const createUserValidator = Joi.object({
     user_type: Joi.string().allow(...Object.values(userRoles)),
 });
 
-module.exports = { createUserValidator };
+const userEmailValid = Joi.object({
+    email: Joi.string()
+        .regex(EMAIL_REGEXP)
+        .trim()
+        .required()
+});
+
+const updateUserValidator = Joi.object({
+    first_name: Joi.string()
+        .alphanum()
+        .min(2)
+        .max(30)
+        .trim(),
+    last_name: Joi.string()
+        .alphanum()
+        .min(2)
+        .max(30)
+        .trim(),
+});
+
+module.exports = { createUserValidator, userEmailValid, updateUserValidator };
